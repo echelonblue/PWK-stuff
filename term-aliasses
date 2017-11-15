@@ -1,0 +1,196 @@
+# myIP address
+function myip() {
+    ifconfig lo0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "lo0       : " $2}'
+	ifconfig eth0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "en0 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
+	ifconfig eth0 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en0 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
+	ifconfig wlan0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "en1 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
+	ifconfig wlan0 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en1 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
+}
+
+## Colorize the ls output ##
+alias ls='ls --color=auto'
+ 
+## Use a long listing format ##
+alias ll='ls -la'
+ 
+## Show hidden files ##
+alias l.='ls -d .* --color=auto'
+
+## get rid of command not found ##
+alias cd..='cd ..'
+ 
+## a quick way to get out of current directory ##
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .....='cd ../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+
+## Colorize the grep command output for ease of use (good for log files)##
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+alias bc='bc -l'
+
+alias sha1='openssl sha1'
+
+alias mkdir='mkdir -pv'
+
+alias mount='mount |column -t'
+
+# handy short cuts #
+alias h='history'
+alias j='jobs -l'
+
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
+
+alias ports='netstat -tulanp'
+
+## shortcut  for iptables and pass it via sudo#
+alias ipt='sudo /sbin/iptables'
+ 
+# display all rules #
+alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
+alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
+alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
+alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
+alias firewall=iptlist
+
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -I --preserve-root'
+ 
+alias myip='curl -4 icanhazip.com'
+
+# confirmation #
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+ 
+# Parenting changing perms on / #
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+# distro specific  - Debian / Ubuntu and friends #
+# install with apt-get
+alias apt-get="sudo apt-get"
+alias updatey="sudo apt-get --yes"
+ 
+# update on one command 
+alias update='sudo apt-get autoremove -y && sudo apt-get autoclean -y && sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y'
+
+alias firefox="firefox -P"
+ 
+#Encoding and Decoding
+
+alias urlencode='python -c "import sys, urllib as ul; orig = sys.argv[1] if len(sys.argv) == 2 else sys.stdin.read() ; print ul.quote_plus(orig)"'
+alias urldecode='python -c "import sys, urllib as ul; orig = sys.argv[1] if len(sys.argv) == 2 else sys.stdin.read() ; print ul.unquote_plus(orig)"'
+
+
+
+#git
+alias gt='git pull && git push && clear && echo synced'
+alias git-share-init='git --bare init --shared=group'
+
+
+#format
+alias prettyxml='xmllint --format in.xml --output out.xml'
+alias prettyjson='python -m json.tool'
+
+#
+alias nmap-vuln='nmap -Pn -sS -sV -v --script=vulscan/vulscan.nse -iL /root/Desktop/targets-nmap'
+
+
+#nmap specific
+alias nmap-zombie-identify='nmap ip - watch for incremental in IP ID sequence && sudo nmap -O -v -n -iL /root/Desktop/targets-nmap'
+alias nmap-zombie='echo type command zombie-IP:port destination-IP with extra scanoptions && sudo nmap -Pn -p- -sI -v -iL /root/Desktop/targets-nmap'
+
+#NMAP
+alias nmapmg-tcp-all='sudo nmap -v -sS -sV -oA nmap-ss-allports --reason --version-light -p--iL /root/Desktop/targets-nmap'
+alias nmapmg-tcp-t1000='sudo nmap -v -sS -sV -oA nmap-ss-top1000 --reason --version-light --top-ports 1000 -iL /root/Desktop/targets-nmap' 
+alias nmapmg-udp-all='sudo nmap -v -sU -sV -oA nmap-su-allports --reason --version-light -p- -iL /root/Desktop/targets-nmap' 
+alias nmapmg-udp-t1000='sudo nmap -v -sU -sV -oA nmap-su-top1000 --reason --version-light --top-ports 1000 -iL /root/Desktop/targets-nmap'
+alias nmap-host-disc-no-ping='echo windows host discovery no ping && sudo nmap –n -sn –PS22,135,443,445 -iL /root/Desktop/targets-nmap'
+alias nmap-ping='sudo nmap -sn -iL /root/Desktop/targets-nmap'
+alias nmap-socks'nmap --proxy socks4://127.0.0.1:12345'
+
+
+#nmap blah
+alias nmap-zombie-identify='nmap ip - watch for incremental in IP ID sequence && sudo nmap -O -v -n -iL /root/Desktop/targets-nmap'
+alias nmap-zombie='echo type command zombie-IP:port destination-IP with extra scanoptions && screen -dmSL nmap-zombie sudo nmap -Pn -p- -sI -v && screen -r nmap-zombie -iL /root/Desktop/targets-nmap'
+alias nmap-proxy='sudo nmap --proxy socks4://127.0.0.1:12345'
+
+alias fastsc='cd ~/Desktop && screen -dmSL fastscan /root/bin/fastscan.sh -i /root/Desktop/targets-nmap && screen -r fastscan'
+
+
+
+
+#rsync
+alias rsync-copy='rsync -av --partial --progress -e' 
+
+alias shutd='sudo shutdown -h 0'
+
+
+alias otp='oathtool -v'
+
+#proxying
+alias socat80='socat TCP-LISTEN:80,fork,reuseaddr TCP:localst:8080'
+alias socat443='socat TCP-LISTEN:443,fork,reuseaddr TCP:localst:8080'
+alias pc='proxychains4'
+
+#android related 
+alias apk-dis='java -jar ~/Apktool/apktool_2.2.1.jar d'
+alias apk-bui='java -jar ~/Apktool/apktool_2.2.1.jar b'
+alias apk-sign='~/scripts/sign-apk'
+
+alias src='source ~/.zshrc'
+
+alias certview='openssl x509 -noout -text -in'
+
+alias update='apt-get update && apt-get upgrade -y && sudo apt-get dist-upgrade -y'
+
+alias pry='pry --simple-prompt'
+
+alias ufw-ecppt='sudo ufw allow in on tap0'
+alias ufw-ecppt-remove='sudo ufw delete allow in on tap0'
+
+#forloop
+#for i in {1..5}; do COMMAND-HERE; done
+
+alias sp='searchsploit'
+alias pc='proxychains4'
+alias sclient='openssl s_client -connect'
+
+prompt_context () { }
+
+
+#python webserver
+alias webserv='python -m SimpleHTTPServer'
+
+alias perm-world='find / -type d -perm -o+w -exec ls -ld {} \;'
+
+alias kalishrink='cat /dev/zero > zero.fill;sync;sleep 1;sync;rm -f zero.fill'
+alias win7vm='rdesktop -u offsec -p OGn42ghXDWv 10.11.22.89'
+
+alias ovpn-oscp='openvpn /root/ovpn/OS-31321-PWK.ovpn'
+
+alias nmap-ssh="nmap -p 22 --open -sV 10.11.1.0/24 | grep 'Nmap scan report for' | cut -f 5 -d ' '"
+
+
+alias labs='cd /mnt/hgfs/OSCP-syncs/PWK-labs && pwd'
+alias creds='cd /mnt/hgfs/OSCP-syncs/PWK-labs/creds-PWK && pwd'
+
+alias cross-debug='edb --run /usr/games/crossfire/bin/crossfire'
+alias apachelog='tail  /var/log/apache2/access.log'
+
+alias pivot-it='sshuttle -r sean@10.11.1.251 10.1.1.0/24'
+alias pivot-dev='sshuttle -r j0hn@10.11.1.252:22000 10.2.2.0/24'
+alias pivot-dev2='sshuttle -r j0hn@10.11.1.218:22 10.2.2.0/24'
+
+alias mtu-small='ifconfig tap0 mtu 1200 '
+
