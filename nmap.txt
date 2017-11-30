@@ -1,0 +1,5 @@
+nmap --stats-every 1m -T4 -Pn -v -sS -sU -sV -sC --script vuln --version-light --reason --max-retries 2 -O -p- -oA public-network 10.11.1.0/24
+
+convert nmap xml to html
+
+xsltproc public-network.xml -o public-network.html
