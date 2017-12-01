@@ -1,0 +1,20 @@
+Host *
+#ForwardX11 yes
+ServerAliveInterval 30
+ServerAliveCountMax 3
+#IdentityFile /Users/blah/.ssh/id_rsa
+
+
+
+#some host you want to use
+Host it
+HostName 10.11.1.XXX
+Port 22
+User username
+IdentityFile /root/.ssh/id_ecdsa
+#UserKnownHostsFile /Users/blah/.ssh/HS/id_rsa
+DynamicForward 12345
+ServerAliveInterval 30
+ForwardX11 yes
+#ProxyCommand corkscrew proxy.example.com #proxypoort %h %p
+

