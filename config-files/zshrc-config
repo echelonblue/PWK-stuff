@@ -1,8 +1,14 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# 
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 
 # Path to your oh-my-zsh installation.
   export ZSH=/root/.oh-my-zsh
+
+export PATH=/root/bin:$PATH
+export PATH=/root/.local/bin:$PATH
+
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -99,6 +105,9 @@ alias ls='ls --color=auto'
  
 ## Use a long listing format ##
 alias ll='ls -la'
+
+#tftp server /tftp
+alias tftp='atftpd --daemon --port 69 /tftp'
  
 ## Show hidden files ##
 alias l.='ls -d .* --color=auto'
@@ -190,27 +199,36 @@ alias prettyxml='xmllint --format in.xml --output out.xml'
 alias prettyjson='python -m json.tool'
 
 #
+alias nmap-vuln='nmap -Pn -sS -sV -v --script=vulscan/vulscan.nse -iL /root/Desktop/targets-nmap'
+
 
 #nmap specific
-alias nmap-zombie-identify='nmap ip - watch for incremental in IP ID sequence && sudo nmap -O -v -n'
-alias nmap-zombie='echo type command zombie-IP:port destination-IP with extra scanoptions && sudo nmap -Pn -p- -sI -v'
+alias nmap-zombie-identify='nmap ip - watch for incremental in IP ID sequence && sudo nmap -O -v -n -iL /root/Desktop/targets-nmap'
+alias nmap-zombie='echo type command zombie-IP:port destination-IP with extra scanoptions && sudo nmap -Pn -p- -sI -v -iL /root/Desktop/targets-nmap'
+
+#nmap scriptscan
+alias nmap-smb='nmap -Pn -v -p 445 —script vuln -iL /root/Desktop/targets-nmap -oX /root/Desktop/smb-vuln ; xsltproc ~/Desktop/smb-vuln -o  ~/Desktop/smb-vuln.html'
 
 #NMAP
-alias nmapmg-tcp-all='sudo nmap -v -sS -sV -oA nmap-ss-allports --reason --version-light -p-'
-alias nmapmg-tcp-t1000='sudo nmap -v -sS -sV -oA nmap-ss-top1000 --reason --version-light --top-ports 1000' 
-alias nmapmg-udp-all='sudo nmap -v -sU -sV -oA nmap-su-allports --reason --version-light -p-' 
-alias nmapmg-udp-t1000='sudo nmap -v -sU -sV -oA nmap-su-top1000 --reason --version-light --top-ports 1000'
-alias nmap-host-disc-no-ping='echo windows host discovery no ping && sudo nmap –n -sn –PS22,135,443,445'
-alias nmap-ping='sudo nmap -sn'
+alias nmapmg-tcp-all='sudo nmap -v -sS -sV -oA nmap-ss-allports --reason --version-light -p--iL /root/Desktop/targets-nmap'
+alias nmapmg-tcp-t1000='sudo nmap -v -sS -sV -oA nmap-ss-top1000 --reason --version-light --top-ports 1000 -iL /root/Desktop/targets-nmap' 
+alias nmapmg-udp-all='sudo nmap -v -sU -sV -oA nmap-su-allports --reason --version-light -p- -iL /root/Desktop/targets-nmap' 
+alias nmapmg-udp-t1000='sudo nmap -v -sU -sV -oA nmap-su-top1000 --reason --version-light --top-ports 1000 -iL /root/Desktop/targets-nmap'
+alias nmap-host-disc-no-ping='echo windows host discovery no ping && sudo nmap –n -sn –PS22,135,443,445 -iL /root/Desktop/targets-nmap'
+alias nmap-ping='sudo nmap -sn -iL /root/Desktop/targets-nmap'
 alias nmap-socks'nmap --proxy socks4://127.0.0.1:12345'
 
+#httpenum
+alias gb='gobuster  -t 50 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x .txt,.md,.rc,.conf,.cnf,.inc,.php,.html,.cgi,.phtml,.pl,.py -u'
 
 #nmap blah
-alias nmap-zombie-identify='nmap ip - watch for incremental in IP ID sequence && sudo nmap -O -v -n'
-alias nmap-zombie='echo type command zombie-IP:port destination-IP with extra scanoptions && screen -dmSL nmap-zombie sudo nmap -Pn -p- -sI -v && screen -r nmap-zombie'
+alias nmap-zombie-identify='nmap ip - watch for incremental in IP ID sequence && sudo nmap -O -v -n -iL /root/Desktop/targets-nmap'
+alias nmap-zombie='echo type command zombie-IP:port destination-IP with extra scanoptions && screen -dmSL nmap-zombie sudo nmap -Pn -p- -sI -v && screen -r nmap-zombie -iL /root/Desktop/targets-nmap'
 alias nmap-proxy='sudo nmap --proxy socks4://127.0.0.1:12345'
 
-
+#fastscan
+alias fastsc='cd ~/Desktop && screen -dmSL fastscan /root/bin/fastscan.sh -i /root/Desktop/targets-nmap && screen -r fastscan'
+alias scan='cd ~/Desktop && screen -dmSL scan /root/bin/fastscan-edit.sh -i /root/Desktop/targets-nmap && screen -r scan'
 
 # DNS dig
 alias dig-zone-transfer='~/scripts/dig-zonetransfer.sh'
@@ -256,6 +274,7 @@ alias sclient='openssl s_client -connect'
 
 prompt_context () { }
 
+alias vnc-ser='x11vnc -ncache 10 -auth guess -nap -forever -loop -repeat -rfbauth /root/.vnc/passwd -rfbport 5900 -noncache'
 
 #python webserver
 alias webserv='python -m SimpleHTTPServer'
@@ -263,23 +282,25 @@ alias webserv='python -m SimpleHTTPServer'
 alias perm-world='find / -type d -perm -o+w -exec ls -ld {} \;'
 
 alias kalishrink='cat /dev/zero > zero.fill;sync;sleep 1;sync;rm -f zero.fill'
-alias win7vm='rdesktop -u offsec -p OGn42ghXDWv 10.11.22.89'
+alias win7vm='rdesktop -u offsec -p XXXXXX 10.11.22.XXX'
 
-alias ovpn-oscp='openvpn /root/ovpn/OS-31321-PWK.ovpn'
+#alias ovpn-oscp='openvpn /root/ovpn/OS-31321-PWK.ovpn'
+alias ovpn-exam='openvpn /root/ovpn/exam.ovpn'
+alias ovpn-HTB='openvpn /root/ovpn/htb.ovpn'
+alias ovpn-ru='openvpn /root/ovpn/lab.pentestit.ru.conf'
 
 alias nmap-ssh="nmap -p 22 --open -sV 10.11.1.0/24 | grep 'Nmap scan report for' | cut -f 5 -d ' '"
 
 
-alias labs='cd /mnt/hgfs/OSCP-syncs/PWK && pwd'
-alias exam=''cd /mnt/hgfs/OSCP-syncs/Exam-OSCP && pwd'
+alias labs='cd /mnt/hgfs/OSCP-syncs/PWK-labs && pwd'
 alias creds='cd /mnt/hgfs/OSCP-syncs/PWK-labs/creds-PWK && pwd'
 
 alias cross-debug='edb --run /usr/games/crossfire/bin/crossfire'
 alias apachelog='tail  /var/log/apache2/access.log'
 
-alias pivot-it='sshuttle -r sean@10.11.1.251 10.1.1.0/24'
-alias pivot-dev='sshuttle -r j0hn@10.11.1.252:22000 10.2.2.0/24'
-alias pivot-dev2='sshuttle -r j0hn@10.11.1.218:22 10.2.2.0/24'
+alias pivot-xxx='sshuttle -r xxx@x.x.x.x 10.1.1.0/24'
+alias pivot-xxx='sshuttle -r xxx@x.x.x.x:XXX 10.2.2.0/24'
+alias pivot-xxx='sshuttle -r xxx@x.x.x.x:XX 10.2.2.0/24'
 
 alias mtu-small='ifconfig tap0 mtu 1200 '
 
