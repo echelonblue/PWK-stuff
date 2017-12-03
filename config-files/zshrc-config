@@ -220,6 +220,7 @@ alias nmap-socks'nmap --proxy socks4://127.0.0.1:12345'
 
 #httpenum
 alias gb='gobuster  -t 50 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x .txt,.md,.rc,.conf,.cnf,.inc,.php,.html,.cgi,.phtml,.pl,.py -u'
+alias gb2='gobuster -w /usr/share/seclists/Discovery/Web_Content/cgis.txt -u'
 
 #nmap blah
 alias nmap-zombie-identify='nmap ip - watch for incremental in IP ID sequence && sudo nmap -O -v -n -iL /root/Desktop/targets-nmap'
