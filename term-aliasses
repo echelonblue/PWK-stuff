@@ -194,3 +194,4 @@ alias pivot-dev2='sshuttle -r j0hn@10.11.1.218:22 10.2.2.0/24'
 
 alias mtu-small='ifconfig tap0 mtu 1200 '
 
+echo 1 > /proc/sys/net/ipv4/ip_forward && responder -a -Fw -v —lm -i 
