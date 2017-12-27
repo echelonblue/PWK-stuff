@@ -162,7 +162,7 @@ alias ufw-ecppt-remove='sudo ufw delete allow in on tap0'
 #forloop
 #for i in {1..5}; do COMMAND-HERE; done
 
-alias sp='searchsploit'
+alias sp='searchsploit --exclude="(PoC)|/dos/"'
 alias pc='proxychains4'
 alias sclient='openssl s_client -connect'
 
